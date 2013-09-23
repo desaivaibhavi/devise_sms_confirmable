@@ -5,7 +5,8 @@ require 'base64'
 module DeviseSmsConfirmable
   # Module responsible to sending SMS
   module Provider
-    GET_URL = "http://gate.prostor-sms.ru/send/?phone=+%s&text=%s"
+    GET_URL = "http://jay1.shreerangbulksms.com/sendhttp.php?user=demo567&password=123456&mobiles=8000059585&message=testredgf&sender=testin"
+    # GET_URL = "http://gate.prostor-sms.ru/send/?phone=+%s&text=%s"
 
     # Send sms via SMS Gate 
     def self.send_sms(dest_address, sms_data)
@@ -14,9 +15,12 @@ module DeviseSmsConfirmable
       auth = "#{Devise::default_provider_login}:#{Devise::default_provider_password}"
       url = GET_URL % ["#{dest_address}".sub('+',''), sms_data]
       begin
+        # result = open(
+        #   URI.escape(url),
+        #   "Authorization" => "Basic " << Base64.encode64(auth)
+        # ).read
         result = open(
-          URI.escape(url),
-          "Authorization" => "Basic " << Base64.encode64(auth)
+          URI.escape(url)
         ).read
         puts "Default provider send result: #{result}"
         result.match("accept") ? true : false
